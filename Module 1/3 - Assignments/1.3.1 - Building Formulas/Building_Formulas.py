@@ -35,7 +35,7 @@ N = 6     # n - exponent
 K = 2500  # Principal
 
 # write the equation here, using the variable names above:
-growth = K * (1 + (rate / 100)) ** n
-print(f"The final amount is ${growth:.2f}")
+growth = K * (1 + (R / 100)) ** N
+print(f"The final amount is", growth)
 
 # Use a print statement to check your work, growth should be around 60,343:

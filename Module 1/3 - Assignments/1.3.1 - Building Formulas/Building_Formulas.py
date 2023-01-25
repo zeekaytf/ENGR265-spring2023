@@ -39,3 +39,19 @@ growth = K * (1 + (R / 100)) ** N
 print(f"The final amount is", growth)
 
 # Use a print statement to check your work, growth should be around 60,343:
+# Set Initial Values for the Initial investment, the rate, and the time
+investment = 44000000000
+rate = 3.96
+time = 10
+
+# Calculate 10 year profit
+
+ten_year_profit = investment * (1 + (rate / 100)) ** time
+print(f"The 10 year profit of Elon's investment would be ${ten_year_profit - investment:.2f}")
+
+# Change the rate and time for the 20 year scenario
+time = 20
+rate = 4.32
+# Calculate 20 year profit
+twenty_year_profit = investment * (1 + (rate / 100)) ** time
+print(f"The 20 year profit of Elon's investment would be ${twenty_year_profit - investment:.2f}")

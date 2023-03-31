@@ -29,6 +29,7 @@ diff = None
 # pass data through square function
 squared = None
 
+#@TODO: remove this language in future revisions.
 # pass through moving average of 150ms window @ 250 Hz => 38 samples
 filtered = None
 

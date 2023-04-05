@@ -32,14 +32,14 @@ Plot signal in time domain
 """
 
 # sampling rate (Hertz)
-sampling_rate = 10 * max(source_signal_frequency, corrupt_signal_frequency)
+sampling_rate = 1000
 
 # sampling period (seconds)
 sampling_period = 1 / sampling_rate
 
 # make a simple plot of the signal sampled at the rate over 1 periods
 # use np.line space to create a linearly spaced array
-time = np.arange(0, 2, sampling_period)
+time = np.arange(start=0, stop=1, step=sampling_period)
 
 # now calculate the signal from the resulting sample rate
 # signal = Asin(2*pi*f*time+ phase)
@@ -58,12 +58,12 @@ plt.legend()
 plt.show()
 
 """
-Plot signal in frequency domain
+Plot signal in frequency domain: two-sided
 Pulling from: https://pythonnumericalmethods.berkeley.edu/notebooks/chapter24.04-FFT-in-Python.html
 """
 
-X = fft(combined_signal)
 N = len(combined_signal)
+X = fft(combined_signal)
 sample_intervals = np.arange(N)
 T = N / sampling_rate
 freq = sample_intervals / T
@@ -75,8 +75,9 @@ plt.title('Two-Sided FFT of Signal')
 plt.show()
 
 """
-Plot signal in frequency domain
-Using One-sided option from #https://medium.com/0xcode/fast-fourier-transform-fft-algorithm-implementation-in-python-b592099bdb27
+Plot signal in frequency domain:
+Using One-sided option from 
+https://medium.com/0xcode/fast-fourier-transform-fft-algorithm-implementation-in-python-b592099bdb27
 """
 
 N = len(combined_signal)//2

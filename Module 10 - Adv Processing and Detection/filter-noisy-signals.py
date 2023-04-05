@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import math
 from scipy import signal
 from filter_utilities import plot_digital_filter_response, plot_fft_response
-from numpy.fft import fft
 
 """
 Source Signal
@@ -38,7 +37,7 @@ Global Parameters
 sample_frequency = 10 * max(source_signal_frequency, corrupt_signal_frequency)
 
 # make a simple plot of the signal sampled at the rate over one period
-time = np.arange(0, 1, 1/sample_frequency)
+time = np.arange(0, 1, 1 / sample_frequency)
 
 # now calculate the signal from the resulting sample rate
 # signal = Asin(2*pi*f*time+ phase)
@@ -61,7 +60,7 @@ Plot signal in frequency domain
 Pulling from: https://pythonnumericalmethods.berkeley.edu/notebooks/chapter24.04-FFT-in-Python.html
 """
 
-plot_fft_response(real_signal,sample_frequency)
+plot_fft_response(real_signal, sample_frequency)
 
 """
 After identifying the noise location, develop a filter type to remove it
@@ -88,10 +87,49 @@ filtered = signal.filtfilt(b, a, real_signal)
 plt.plot(time, source, label='Original Signal')
 plt.plot(time, real_signal, label='Corrupted Signal')
 plt.plot(time[:len(filtered)], filtered, label='Filtered Result')
+plt.title('Impact of Filtering with Butter and FiltFilt Function')
 plt.legend()
 plt.show()
 
 """
 Show the resulting figure to see if it worked
 """
-plot_fft_response(filtered,sample_frequency)
+plot_fft_response(filtered, sample_frequency)
+
+"""
+Attempt a second approach with FIRWIN and convolve
+@TODO: still a work in progress
+"""
+N = 20
+f_s = sample_frequency
+f_c = 50
+
+b = signal.firwin(numtaps=N, cutoff=f_c, fs=f_s)
+
+w, h = signal.freqz(b)
+
+# because the results are normalized to sample frequency in radians, convert back
+x = w * f_s * 1.0 / (2 * np.pi)
+
+# Response is linear and not in dB
+y = h
+
+# plot filter response
+plt.semilogx(x, y)
+plt.ylabel('Amplitude [A]')
+plt.xlabel('Frequency [Hz]')
+plt.title('Digital Filter Frequency Response with FIRWIN')
+plt.grid(which='both', linestyle='-', color='grey')
+plt.show()
+
+
+# filter signal with convolve
+filtered = np.convolve(real_signal, b)
+
+# replot the original and filtered signals
+plt.plot(time, source, label='Original Signal')
+plt.plot(time, real_signal, label='Corrupted Signal')
+plt.plot(time, filtered[:len(time)], label='Filtered Result')
+plt.title('Impact of Filtering with Butter and Convolve Function')
+plt.legend()
+plt.show()
